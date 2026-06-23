@@ -356,7 +356,7 @@ export default function ChatWidget() {
         .auriseg-fab { animation: auriseg-float 3s ease-in-out infinite; }
         .auriseg-ring { animation: auriseg-ring 1.8s ease-out infinite; }
         .auriseg-header-shimmer {
-          background: linear-gradient(90deg, #f97316 0%, #fb923c 25%, #f97316 50%, #ea580c 75%, #f97316 100%);
+          background: linear-gradient(90deg, #FE5538 0%, #ff7a63 25%, #FE5538 50%, #d43f24 75%, #FE5538 100%);
           background-size: 200% 100%;
           animation: auriseg-shimmer 6s linear infinite;
         }
