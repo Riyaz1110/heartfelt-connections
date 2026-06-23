@@ -375,17 +375,18 @@ export default function ChatWidget() {
 
       <div className="fixed bottom-5 right-5 z-[9999]">
         {!open && (
-          <span className="absolute inset-0 rounded-full bg-orange-500 auriseg-ring pointer-events-none" />
+          <span className="absolute inset-0 rounded-full auriseg-ring pointer-events-none" style={{ background: '#FE5538' }} />
         )}
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Close chat' : 'Open chat'}
-          className={`relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
+          style={{ background: '#000', border: '2px solid #FE5538' }}
+          className={`relative flex items-center justify-center w-14 h-14 rounded-full text-white shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
         >
           <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
             <img src="/headericon 1.png" alt="Auriseg" className="w-8 h-8 object-contain" />
           </span>
-          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`}>
+          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`} style={{ color: '#FE5538' }}>
             <X size={24} />
           </span>
         </button>
