@@ -390,11 +390,11 @@ export default function ChatWidget() {
               </div>
             ))}
             {typing && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-orange-100 px-3 py-2 rounded-2xl rounded-bl-sm text-gray-500 flex items-center gap-1 shadow-sm">
-                  <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '120ms' }} />
-                  <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '240ms' }} />
+              <div className="flex justify-start auriseg-msg">
+                <div className="bg-white border border-orange-100 px-3 py-2.5 rounded-2xl rounded-bl-sm text-gray-500 flex items-center gap-1 shadow-sm">
+                  <span className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 bg-orange-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -404,13 +404,14 @@ export default function ChatWidget() {
           <div className="px-3 pt-2 pb-1 border-t border-orange-100 bg-white">
             <div className="text-[10px] uppercase tracking-wide text-gray-400 mb-1.5 font-medium">Suggested</div>
             <div className="flex flex-wrap gap-1.5">
-              {SUGGESTIONS.map((q) => (
+              {SUGGESTIONS.map((q, idx) => (
                 <button
                   key={q}
                   type="button"
                   onClick={() => sendMessage(q)}
                   disabled={typing}
-                  className="text-xs px-2.5 py-1 rounded-full border border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 hover:border-orange-300 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ animationDelay: `${idx * 60}ms` }}
+                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full border border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {q}
                 </button>
