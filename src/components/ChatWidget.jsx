@@ -383,7 +383,7 @@ export default function ChatWidget() {
           className={`relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
         >
           <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
-            <MessageCircle size={24} />
+            <img src="/headericon 1.png" alt="Auriseg" className="w-8 h-8 object-contain" />
           </span>
           <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`}>
             <X size={24} />
@@ -392,11 +392,13 @@ export default function ChatWidget() {
       </div>
 
       {open && (
-        <div className="auriseg-panel fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-200 bg-white text-gray-900">
+        <div className="auriseg-panel fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-500/40 bg-black text-gray-100">
           {/* Header */}
           <div className="auriseg-header-shimmer flex items-center justify-between px-4 py-3 text-white">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white text-orange-600 flex items-center justify-center font-bold text-sm shadow-md transition-transform hover:rotate-12">A</div>
+              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-md transition-transform hover:rotate-12 overflow-hidden">
+                <img src="/headericon 1.png" alt="Auriseg" className="w-6 h-6 object-contain" />
+              </div>
               <div>
                 <div className="font-semibold text-sm leading-tight">AurisegBot</div>
                 <div className="text-[11px] text-white/90 leading-tight flex items-center gap-1.5">
@@ -416,14 +418,14 @@ export default function ChatWidget() {
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-3 text-sm bg-orange-50/30">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-3 text-sm bg-black">
             {messages.map((m, i) => (
               <div key={i} className={`flex auriseg-msg ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
                   className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed transition-transform hover:-translate-y-0.5 ${
                     m.role === 'user'
                       ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-br-sm shadow-md'
-                      : 'bg-white text-gray-800 border border-orange-100 rounded-bl-sm shadow-sm'
+                      : 'bg-neutral-900 text-gray-100 border border-orange-500/30 rounded-bl-sm shadow-sm'
                   }`}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content || '') }}
                 />
@@ -431,7 +433,7 @@ export default function ChatWidget() {
             ))}
             {typing && (
               <div className="flex justify-start auriseg-msg">
-                <div className="bg-white border border-orange-100 px-3 py-2.5 rounded-2xl rounded-bl-sm text-gray-500 flex items-center gap-1 shadow-sm">
+                <div className="bg-neutral-900 border border-orange-500/30 px-3 py-2.5 rounded-2xl rounded-bl-sm text-gray-400 flex items-center gap-1 shadow-sm">
                   <span className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                   <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                   <span className="w-2 h-2 bg-orange-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -441,8 +443,8 @@ export default function ChatWidget() {
           </div>
 
           {/* Suggested questions */}
-          <div className="px-3 pt-2 pb-1 border-t border-orange-100 bg-white">
-            <div className="text-[10px] uppercase tracking-wide text-gray-400 mb-1.5 font-medium">Suggested</div>
+          <div className="px-3 pt-2 pb-1 border-t border-orange-500/20 bg-black">
+            <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1.5 font-medium">Suggested</div>
             <div className="flex flex-wrap gap-1.5">
               {SUGGESTIONS.map((q, idx) => (
                 <button
@@ -451,7 +453,7 @@ export default function ChatWidget() {
                   onClick={() => sendMessage(q)}
                   disabled={typing}
                   style={{ animationDelay: `${idx * 60}ms` }}
-                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full border border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full border border-orange-500/40 bg-neutral-900 text-orange-300 hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {q}
                 </button>
@@ -462,7 +464,7 @@ export default function ChatWidget() {
           {/* Composer */}
           <form
             onSubmit={sendMessage}
-            className="flex items-end gap-2 p-3 border-t border-orange-100 bg-white"
+            className="flex items-end gap-2 p-3 border-t border-orange-500/20 bg-black"
           >
             <textarea
               ref={inputRef}
@@ -476,7 +478,7 @@ export default function ChatWidget() {
               }}
               rows={1}
               placeholder="Ask about Auriseg services…"
-              className="flex-1 resize-none bg-orange-50/50 border border-orange-200 text-gray-900 rounded-xl px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 focus:shadow-md transition-all duration-200 max-h-28"
+              className="flex-1 resize-none bg-neutral-900 border border-orange-500/30 text-gray-100 rounded-xl px-3 py-2 text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:bg-neutral-900 focus:ring-2 focus:ring-orange-500/30 focus:shadow-md transition-all duration-200 max-h-28"
               disabled={typing}
             />
             <button
