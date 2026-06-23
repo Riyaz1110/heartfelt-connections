@@ -256,11 +256,11 @@ function renderMarkdown(text) {
 
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
   s = s.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
-  s = s.replace(/`([^`]+)`/g, '<code class="bg-orange-100 text-orange-800 px-1 py-0.5 rounded text-xs">$1</code>');
+  s = s.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded text-xs" style="background:rgba(254,85,56,0.15);color:#FE5538">$1</code>');
   s = s.replace(
     /\[([^\]]+)\]\((\/[^\s)]*|https?:\/\/[^\s)]+)\)/g,
     (_, label, href) =>
-      `<a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="noopener" class="text-orange-600 font-medium underline hover:text-orange-700">${label}</a>`
+      `<a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="noopener" class="font-medium underline" style="color:#FE5538">${label}</a>`
   );
   return s;
 }
