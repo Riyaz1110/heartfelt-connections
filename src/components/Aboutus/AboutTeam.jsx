@@ -199,7 +199,7 @@ const MobileCarousel = ({ current, onPrev, onNext, maxIndex }) => {
 const AboutTeam = () => {
   const [current, setCurrent] = useState(0);
 
-  const DESKTOP_VISIBLE = 4;
+  const DESKTOP_VISIBLE = 3;
   const MOBILE_VISIBLE = 1;
   const maxDesktop = TEAM.length - DESKTOP_VISIBLE;
   const maxMobile = TEAM.length - MOBILE_VISIBLE;
