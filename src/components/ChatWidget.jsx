@@ -11,19 +11,62 @@ const WELCOME = {
     "Hi! I'm AurisegBot. Ask me about our cybersecurity services, industries we serve, or how to get help. If you're under active attack, I can point you to our 24/7 hotline.",
 };
 
+const SUGGESTIONS = [
+  'What services do you offer?',
+  'I need help — under attack',
+  'Industries you serve?',
+  'Talk to an expert',
+];
+
 function renderMarkdown(text) {
-  // Minimal: links [label](url) and line breaks
-  const escaped = text
+  // Escape HTML
+  let s = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
-  const withLinks = escaped.replace(
+
+  // Split into lines to handle headings & lists
+  const lines = s.split(/\n/);
+  const out = [];
+  let inList = false;
+  for (let line of lines) {
+    const trimmed = line.trim();
+    // Headings ### / ## / #
+    const h = trimmed.match(/^(#{1,4})\s+(.*)$/);
+    if (h) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      const lvl = Math.min(h[1].length + 2, 6); // ### -> h5-ish
+      out.push(`<div class="font-semibold text-orange-700 mt-1 mb-1">${h[2]}</div>`);
+      continue;
+    }
+    // Bullet list
+    if (/^[*\-]\s+/.test(trimmed)) {
+      if (!inList) { out.push('<ul class="list-disc pl-5 space-y-0.5 my-1">'); inList = true; }
+      out.push(`<li>${trimmed.replace(/^[*\-]\s+/, '')}</li>`);
+      continue;
+    }
+    if (inList) { out.push('</ul>'); inList = false; }
+    if (trimmed === '') { out.push('<div class="h-2"></div>'); continue; }
+    out.push(`<p class="my-1">${line}</p>`);
+  }
+  if (inList) out.push('</ul>');
+  s = out.join('');
+
+  // Bold **text**
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
+  // Italic *text* (avoid matching list bullets already removed)
+  s = s.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
+  // Inline code `code`
+  s = s.replace(/`([^`]+)`/g, '<code class="bg-orange-100 text-orange-800 px-1 py-0.5 rounded text-xs">$1</code>');
+  // Links [label](url)
+  s = s.replace(
     /\[([^\]]+)\]\((\/[^\s)]*|https?:\/\/[^\s)]+)\)/g,
     (_, label, href) =>
-      `<a href="${href}" class="text-orange-600 underline hover:text-orange-700">${label}</a>`
+      `<a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="noopener" class="text-orange-600 font-medium underline hover:text-orange-700">${label}</a>`
   );
-  return withLinks.replace(/\n/g, '<br/>');
+  return s;
 }
+
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
