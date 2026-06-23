@@ -468,7 +468,8 @@ export default function ChatWidget() {
           {/* Composer */}
           <form
             onSubmit={sendMessage}
-            className="flex items-end gap-2 p-3 border-t border-orange-500/20 bg-black"
+            className="flex items-end gap-2 p-3 bg-black"
+            style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}
           >
             <textarea
               ref={inputRef}
@@ -482,13 +483,15 @@ export default function ChatWidget() {
               }}
               rows={1}
               placeholder="Ask about Auriseg services…"
-              className="flex-1 resize-none bg-neutral-900 border border-orange-500/30 text-gray-100 rounded-xl px-3 py-2 text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:bg-neutral-900 focus:ring-2 focus:ring-orange-500/30 focus:shadow-md transition-all duration-200 max-h-28"
+              style={{ background: '#171717', border: '1px solid rgba(254,85,56,0.3)', color: '#f3f4f6' }}
+              className="flex-1 resize-none rounded-xl px-3 py-2 text-sm placeholder-gray-500 focus:outline-none transition-all duration-200 max-h-28"
               disabled={typing}
             />
             <button
               type="submit"
               disabled={typing || !input.trim()}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 hover:scale-110 hover:-rotate-12 active:scale-90 transition-all duration-200 shadow-md hover:shadow-lg"
+              style={{ background: '#FE5538' }}
+              className="w-10 h-10 flex items-center justify-center rounded-xl text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 hover:scale-110 hover:-rotate-12 active:scale-90 transition-all duration-200 shadow-md hover:shadow-lg"
               aria-label="Send message"
             >
               <Send size={16} className="transition-transform" />
