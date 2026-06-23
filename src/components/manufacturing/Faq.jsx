@@ -1,0 +1,378 @@
+import React, { useState } from 'react';
+
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const faqs = [
+    {
+      question: "Q1: How quickly can Auriseg get us NIST CSF 2.0 compliant?",
+      answer: "Timeline depends on your current posture. Most organizations see critical gaps remediated within 4–8 weeks including documentation, controls, and tested IR procedures, typically takes 60–90 days."
+    },
+    {
+      question: "Q2: Do you work with our existing ERP and SCADA system vendors?",
+      answer: "Yes. Auriseg integrates with all major industrial platforms. We work alongside your vendor relationships and can extend security monitoring to OT environments."
+    },
+    {
+      question: "Q3: What makes manufacturing cybersecurity different from general enterprise security?",
+      answer: "Attack vectors are different. Contrast PLCs, SCADA systems and IIoT devices with enterprise IT endpoints. Defence contractors face stricter regulation. Production downtime has consequences for contract compliance and revenue."
+    },
+    {
+      question: "Q4: We’ve already experienced an OT breach. Can Auriseg help us recover and prevent recurrence?",
+      answer: "Yes. We specialise in post-breach OT recovery. We contain threats, conduct forensic investigations, support DoD incident reporting and rebuild your security posture to prevent reinfection with evidence for regulators and prime contractors."
+    }
+  ];
+
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <>
+      {/* ═══════════════════════════ DESKTOP ═══════════════════════════ */}
+      <section
+        className="hidden md:block"
+        style={{
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          background: '#FFFFFF',
+          padding: '80px 0 100px 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Inner content constrained to 1240px centered */}
+        <div
+          style={{
+            maxWidth: '1440px',
+            margin: '0 auto',
+            paddingLeft: '3.5cm',
+            paddingRight: '100px',
+            boxSizing: 'border-box',
+          }}
+        >
+          {/* ── FAQ Badge ── */}
+          <div style={{ marginBottom: '32px' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '10px',
+                border: '1px solid #CACACA',
+                padding: '10px 11px',
+                backgroundColor: '#FFFFFF',
+              }}
+            >
+              <img
+                src="/icons/playbook-icon.png"
+                alt="icon"
+                style={{ width: '8px', height: '11.2px' }}
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Roboto Mono', monospace",
+                  fontWeight: 400,
+                  fontSize: '16px',
+                  color: '#FE5538',
+                  textTransform: 'uppercase',
+                }}
+              >
+                FAQ
+              </span>
+            </div>
+          </div>
+
+          {/* ── Heading ── */}
+          <h2
+            style={{
+              fontFamily: "'Cabinet Grotesk', sans-serif",
+              fontWeight: 500,
+              fontSize: '46px',
+              lineHeight: '110%',
+              color: '#030407',
+              marginBottom: '40px',
+              maxWidth: '686px',
+            }}
+          >
+            Still have questions? Our security specialists are available for a direct conversation.
+          </h2>
+
+          {/* ── Accordion Items ── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                style={{
+                  width: '100%',
+                  borderRadius: '10px',
+                  border: '1px solid #ADADAD',
+                  backgroundColor: '#FFFFFF',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Question row */}
+                <div
+                  onClick={() => toggleFAQ(index)}
+                  style={{
+                    width: '100%',
+                    minHeight: '68px',
+                    padding: '20px 24px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: '#FFFFFF',
+                    boxSizing: 'border-box',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontWeight: 500,
+                      fontSize: '22px',
+                      lineHeight: '100%',
+                      color: '#030407',
+                      flex: 1,
+                    }}
+                  >
+                    {faq.question}
+                  </span>
+
+                  {/* Plus / Minus toggle */}
+                  <button
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      backgroundColor: openIndex === index ? '#FF5536' : '#FFFFFF',
+                      border: openIndex === index ? 'none' : '1.61px solid #ADADAD',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        lineHeight: '20px',
+                        color: openIndex === index ? '#FFFFFF' : '#606060',
+                      }}
+                    >
+                      {openIndex === index ? '−' : '+'}
+                    </span>
+                  </button>
+                </div>
+
+                {/* Answer panel */}
+                {openIndex === index && (
+                  <div
+                    style={{
+                      width: '100%',
+                      padding: '20px 24px',
+                      backgroundColor: '#FFFFFF',
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontWeight: 400,
+                        fontSize: '13px',
+                        lineHeight: '23.8px',
+                        color: '#606060',
+                        margin: 0,
+                        maxWidth: '877px',
+                      }}
+                    >
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════ MOBILE ═══════════════════════════ */}
+      <section
+        className="md:hidden"
+        style={{
+          width: '100%',
+          background: '#FFFFFF',
+          paddingTop: '40px',
+          paddingBottom: '40px',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div
+          style={{
+            width: '342px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '32px',
+          }}
+        >
+          {/* FAQ Badge - Mobile */}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                border: '1px solid #CACACA',
+                padding: '8px 12px',
+                backgroundColor: '#FFFFFF',
+              }}
+            >
+              <img
+                src="/icons/playbook-icon.png"
+                alt="icon"
+                style={{ width: '6px', height: '8.4px' }}
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Roboto Mono', monospace",
+                  fontWeight: 500,
+                  fontSize: '12px',
+                  color: '#FE5538',
+                  textTransform: 'uppercase',
+                }}
+              >
+                FAQ
+              </span>
+            </div>
+          </div>
+
+          {/* Heading - Mobile */}
+          <h2
+            style={{
+              fontFamily: "'Cabinet Grotesk', sans-serif",
+              fontWeight: 500,
+              fontSize: '28px',
+              lineHeight: '120%',
+              letterSpacing: '-0.02em',
+              color: '#030407',
+              textAlign: 'center',
+              margin: 0,
+            }}
+          >
+            Common Questions From MSPs Before Partnering
+          </h2>
+
+          {/* Accordion - Mobile */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                style={{
+                  width: '100%',
+                  borderRadius: '10px',
+                  border: '1px solid #ADADAD',
+                  backgroundColor: '#FFFFFF',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Question - Mobile */}
+                <div
+                  onClick={() => toggleFAQ(index)}
+                  style={{
+                    width: '100%',
+                    minHeight: '50px',
+                    padding: '12px 16px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: '#FFFFFF',
+                    gap: '12px',
+                    boxSizing: 'border-box',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontWeight: 500,
+                      fontSize: '14px',
+                      lineHeight: '140%',
+                      color: '#030407',
+                      flex: 1,
+                    }}
+                  >
+                    {faq.question}
+                  </span>
+
+                  {/* Toggle button - Mobile */}
+                  <button
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      borderRadius: '50%',
+                      backgroundColor: '#FF5536',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      style={{
+                        transform: openIndex === index ? 'rotate(45deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.3s ease',
+                      }}
+                    >
+                      <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Answer - Mobile */}
+                {openIndex === index && (
+                  <div
+                    style={{
+                      width: '100%',
+                      padding: '16px',
+                      backgroundColor: '#FFFFFF',
+                      borderTop: '1px solid #ADADAD',
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        lineHeight: '20px',
+                        color: '#606060',
+                        margin: 0,
+                      }}
+                    >
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default FAQ;
