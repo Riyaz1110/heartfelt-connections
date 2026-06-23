@@ -393,7 +393,7 @@ export default function ChatWidget() {
       </div>
 
       {open && (
-        <div className="auriseg-panel fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-500/40 bg-black text-gray-100">
+        <div className="auriseg-panel fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl bg-black text-gray-100" style={{ border: '1px solid rgba(254,85,56,0.4)' }}>
           {/* Header */}
           <div className="auriseg-header-shimmer flex items-center justify-between px-4 py-3 text-white">
             <div className="flex items-center gap-2">
