@@ -285,28 +285,89 @@ export default function ChatWidget() {
 
   return (
     <>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Close chat' : 'Open chat'}
-        className="fixed bottom-5 right-5 z-[9999] flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl hover:scale-105 active:scale-95 transition-transform"
-      >
-        {open ? <X size={24} /> : <MessageCircle size={24} />}
-      </button>
+      <style>{`
+        @keyframes auriseg-pop-in {
+          0% { opacity: 0; transform: translateY(20px) scale(0.85); }
+          60% { opacity: 1; transform: translateY(-4px) scale(1.02); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes auriseg-msg-in {
+          0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes auriseg-ring {
+          0% { transform: scale(1); opacity: 0.55; }
+          100% { transform: scale(1.9); opacity: 0; }
+        }
+        @keyframes auriseg-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        @keyframes auriseg-shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        @keyframes auriseg-chip-in {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .auriseg-panel { animation: auriseg-pop-in 0.35s cubic-bezier(.34,1.56,.64,1) both; transform-origin: bottom right; }
+        .auriseg-msg { animation: auriseg-msg-in 0.3s ease-out both; }
+        .auriseg-fab { animation: auriseg-float 3s ease-in-out infinite; }
+        .auriseg-ring { animation: auriseg-ring 1.8s ease-out infinite; }
+        .auriseg-header-shimmer {
+          background: linear-gradient(90deg, #f97316 0%, #fb923c 25%, #f97316 50%, #ea580c 75%, #f97316 100%);
+          background-size: 200% 100%;
+          animation: auriseg-shimmer 6s linear infinite;
+        }
+        .auriseg-chip { animation: auriseg-chip-in 0.35s ease-out both; }
+        .auriseg-status-dot {
+          width: 6px; height: 6px; border-radius: 9999px; background: #4ade80;
+          box-shadow: 0 0 0 0 rgba(74,222,128,0.7);
+          animation: auriseg-pulse-dot 1.6s ease-out infinite;
+        }
+        @keyframes auriseg-pulse-dot {
+          0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.7); }
+          70% { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+          100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+        }
+      `}</style>
+
+      <div className="fixed bottom-5 right-5 z-[9999]">
+        {!open && (
+          <span className="absolute inset-0 rounded-full bg-orange-500 auriseg-ring pointer-events-none" />
+        )}
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Close chat' : 'Open chat'}
+          className={`relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
+        >
+          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
+            <MessageCircle size={24} />
+          </span>
+          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`}>
+            <X size={24} />
+          </span>
+        </button>
+      </div>
 
       {open && (
-        <div className="fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-200 bg-white text-gray-900">
+        <div className="auriseg-panel fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-200 bg-white text-gray-900">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+          <div className="auriseg-header-shimmer flex items-center justify-between px-4 py-3 text-white">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white text-orange-600 flex items-center justify-center font-bold text-sm">A</div>
+              <div className="w-8 h-8 rounded-full bg-white text-orange-600 flex items-center justify-center font-bold text-sm shadow-md transition-transform hover:rotate-12">A</div>
               <div>
                 <div className="font-semibold text-sm leading-tight">AurisegBot</div>
-                <div className="text-[11px] text-white/80 leading-tight">Online · instant replies</div>
+                <div className="text-[11px] text-white/90 leading-tight flex items-center gap-1.5">
+                  <span className="auriseg-status-dot" />
+                  Online · instant replies
+                </div>
               </div>
             </div>
             <button
               onClick={clearChat}
-              className="text-white/80 hover:text-white p-1"
+              className="text-white/80 hover:text-white p-1 transition-transform hover:rotate-12 hover:scale-110"
               aria-label="Clear conversation"
               title="Clear conversation"
             >
@@ -317,11 +378,11 @@ export default function ChatWidget() {
           {/* Messages */}
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-3 text-sm bg-orange-50/30">
             {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div key={i} className={`flex auriseg-msg ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
-                  className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed ${
+                  className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed transition-transform hover:-translate-y-0.5 ${
                     m.role === 'user'
-                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-br-sm'
+                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-br-sm shadow-md'
                       : 'bg-white text-gray-800 border border-orange-100 rounded-bl-sm shadow-sm'
                   }`}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content || '') }}
