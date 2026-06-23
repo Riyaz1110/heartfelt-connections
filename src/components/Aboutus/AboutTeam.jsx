@@ -50,7 +50,7 @@ const DesktopCarousel = ({ current, onPrev, onNext, maxIndex }) => {
   const viewportRef = useRef(null);
   const [cardW, setCardW] = useState(295);
   const GAP = 24;
-  const VISIBLE = 4;
+  const VISIBLE = 3;
 
   useEffect(() => {
     const measure = () => {
