@@ -142,7 +142,7 @@ const CareerOpenApplication = () => {
             position: 'relative', zIndex: 1,
             width: '100%', maxWidth: '1440px',
             margin: '0 auto', padding: '80px 105px',
-            display: 'flex', alignItems: 'center',
+            display: 'flex', alignItems: 'flex-start',
             gap: '80px', boxSizing: 'border-box',
           }}>
             {/* LEFT */}
