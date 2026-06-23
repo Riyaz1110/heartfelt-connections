@@ -23,117 +23,157 @@ const INTENTS = [
   {
     keys: ['under attack', 'attack', 'breach', 'incident', 'ransomware', 'hacked', 'compromised', 'emergency'],
     reply:
-      "🚨 **Under Attack?** Don't wait — our 24/7 incident response team is ready.\n\n* Visit [Under Attack](/under-attack) for the regional hotline\n* Or jump to [Incident Response](/incident-response)\n\nStay calm, isolate affected systems, and contact us immediately.",
+      "🚨 **Under Attack?** Don't wait — our 24/7 incident response team is ready.\n\n* Visit [Under Attack](/under-attack) for the regional hotline\n* Or jump to [Incident Response](/services/incident-response)\n\nStay calm, isolate affected systems, and contact us immediately.",
   },
   {
     keys: ['service', 'services', 'offering', 'offerings', 'what do you do', 'what do you offer'],
     reply:
-      "Auriseg offers a full cybersecurity portfolio:\n\n* **Managed Security** — [MDR](/mdr), [SOC Augmentation](/soc-augmentation), [Threat Monitoring](/threat-monitoring), [Managed Security](/managed-security)\n* **Advisory & GRC** — [vCISO](/vciso), [GRC](/grc), [Risk](/risk), [Advisory](/advisory)\n* **Assessments** — [Penetration Testing](/penetration), [Vulnerability](/vulnerability), [Audit](/audit), [Maturity](/maturity)\n* **Specialized** — [Cloud](/cloud), [IoT](/iot), [Mobile](/mobile), [AI Security](/ai), [Social Engineering](/social), [Source Code](/source)\n* **For MSPs** — [White Label](/white-label), [Co-Delivery](/codelivery), [Offshore Teams](/offshore)\n\nWhich area would you like to explore?",
+      "Auriseg offers a full cybersecurity portfolio:\n\n* **Managed Security** — [MDR](/services/mdr), [SOC Augmentation](/services/soc-augmentation), [Threat Monitoring](/services/threat-monitoring), [Managed Security](/services/managed-security)\n* **Advisory & GRC** — [vCISO](/services/vciso), [GRC](/services/grc-and-compliance), [Risk](/services/risk-assessments), [Advisory](/services/advisory-and-enablement)\n* **Assessments** — [Penetration Testing](/services/penetration-testing), [Vulnerability](/services/vulnerability-assessment), [Audit](/services/audit-readiness), [Maturity](/services/maturity-assessments)\n* **Specialized** — [Cloud](/services/cloud-security-audit), [IoT](/services/ot-iot-security), [Mobile](/services/mobile-app-security), [AI Security](/services/ai-security), [Social Engineering](/services/social-engineering), [Source Code](/services/source-code-review)\n* **For MSPs** — [White Label](/services/white-label-security), [Co-Delivery](/services/co-delivery), [Offshore Teams](/services/offshore-teams)\n\nWhich area would you like to explore?",
   },
   {
     keys: ['mdr', 'managed detection'],
-    reply: "**MDR (Managed Detection & Response)** — 24/7 threat detection, investigation, and response. Learn more on the [MDR page](/mdr).",
+    reply: "**MDR (Managed Detection & Response)** — 24/7 threat detection, investigation, and response. Learn more on the [MDR page](/services/mdr).",
   },
   {
     keys: ['soc', 'security operations'],
-    reply: "Our **SOC Augmentation** extends your in-house team with Auriseg analysts and tooling. See [SOC Augmentation](/soc-augmentation).",
+    reply: "Our **SOC Augmentation** extends your in-house team with Auriseg analysts and tooling. See [SOC Augmentation](/services/soc-augmentation).",
+  },
+  {
+    keys: ['threat monitoring', '247', '24/7 monitoring'],
+    reply: "**24/7 Threat Monitoring** — continuous detection and response. See [Threat Monitoring](/services/threat-monitoring) or [24/7 Monitoring](/services/247-monitoring).",
+  },
+  {
+    keys: ['managed security'],
+    reply: "**Managed Security Services** — end-to-end protection. See [Managed Security](/services/managed-security).",
   },
   {
     keys: ['vciso', 'ciso'],
-    reply: "**vCISO** gives you executive security leadership on demand. Details on the [vCISO page](/vciso).",
+    reply: "**vCISO** gives you executive security leadership on demand. Details on the [vCISO page](/services/vciso).",
   },
   {
-    keys: ['grc', 'governance', 'compliance', 'risk and compliance'],
-    reply: "**GRC** — governance, risk, and compliance programs tailored to your business. See [GRC](/grc) and [Certification & Compliance](/certification).",
+    keys: ['grc', 'governance', 'compliance program', 'risk and compliance'],
+    reply: "**GRC** — governance, risk, and compliance programs tailored to your business. See [GRC & Compliance](/services/grc-and-compliance) and [Certification & Compliance](/resources/certification).",
+  },
+  {
+    keys: ['regulatory'],
+    reply: "**Regulatory Compliance** across global frameworks. See [Regulatory Compliance](/services/regulatory-compliance).",
+  },
+  {
+    keys: ['advisory', 'enablement'],
+    reply: "**Advisory & Enablement** — strategic security guidance. See [Advisory](/services/advisory-and-enablement) or [Program Advisory](/services/program-advisory).",
+  },
+  {
+    keys: ['risk assessment', 'risk'],
+    reply: "**Risk Assessments** to identify and prioritize threats. See [Risk Assessments](/services/risk-assessments).",
   },
   {
     keys: ['pentest', 'penetration', 'pen test', 'ethical hacking'],
-    reply: "**Penetration Testing** simulates real attacks across your environment. Visit [Penetration Testing](/penetration).",
+    reply: "**Penetration Testing** simulates real attacks across your environment. Visit [Penetration Testing](/services/penetration-testing).",
   },
   {
     keys: ['vulnerability', 'vapt', 'vulnerabilities'],
-    reply: "**Vulnerability Management** — continuous identification and remediation. See [Vulnerability](/vulnerability).",
+    reply: "**Vulnerability Assessment** — continuous identification and remediation. See [Vulnerability Assessment](/services/vulnerability-assessment).",
   },
   {
     keys: ['cloud security', 'cloud'],
-    reply: "**Cloud Security** for AWS, Azure, and GCP. See [Cloud Security](/cloud).",
+    reply: "**Cloud Security Audit** for AWS, Azure, and GCP. See [Cloud Security Audit](/services/cloud-security-audit).",
   },
   {
-    keys: ['iot', 'ot ', 'internet of things'],
-    reply: "**IoT/OT Security** for connected devices and industrial systems. See [IoT Security](/iot).",
+    keys: ['iot', 'ot ', 'internet of things', 'ot/iot'],
+    reply: "**OT/IoT Security** for connected devices and industrial systems. See [OT/IoT Security](/services/ot-iot-security).",
   },
   {
     keys: ['mobile'],
-    reply: "**Mobile Application Security** — iOS & Android. See [Mobile Security](/mobile).",
+    reply: "**Mobile App Security** — iOS & Android. See [Mobile App Security](/services/mobile-app-security).",
   },
   {
     keys: ['ai security', 'ai/ml', 'llm', 'artificial intelligence'],
-    reply: "**AI/ML Security** for models, pipelines, and LLM apps. See [AI Security](/ai).",
+    reply: "**AI Security** for models, pipelines, and LLM apps. See [AI Security](/services/ai-security).",
   },
   {
     keys: ['source code', 'sast', 'code review'],
-    reply: "**Source Code Review** — secure SDLC and SAST. See [Source Code](/source).",
+    reply: "**Source Code Review** — secure SDLC and SAST. See [Source Code Review](/services/source-code-review).",
   },
   {
     keys: ['social engineering', 'phishing'],
-    reply: "**Social Engineering & Phishing Simulation**. See [Social Engineering](/social).",
+    reply: "**Social Engineering & Phishing Simulation**. See [Social Engineering](/services/social-engineering).",
+  },
+  {
+    keys: ['security testing', 'assurance'],
+    reply: "**Security Testing & Assurance** across the stack. See [Security Testing & Assurance](/services/security-testing-assurance).",
+  },
+  {
+    keys: ['security architecture', 'architecture'],
+    reply: "**Security Architecture** design and review. See [Security Architecture](/services/security-architecture).",
+  },
+  {
+    keys: ['tool selection', 'tooling'],
+    reply: "**Tool Selection** — evaluate and choose the right security stack. See [Tool Selection](/services/tool-selection).",
   },
   {
     keys: ['audit'],
-    reply: "**Security Audits** aligned to ISO 27001, SOC 2, PCI DSS, and more. See [Audit](/audit).",
+    reply: "**Audit Readiness** aligned to ISO 27001, SOC 2, PCI DSS, and more. See [Audit Readiness](/services/audit-readiness).",
   },
   {
     keys: ['maturity'],
-    reply: "**Security Maturity Assessment** to benchmark your program. See [Maturity](/maturity).",
+    reply: "**Maturity Assessments** to benchmark your program. See [Maturity Assessments](/services/maturity-assessments).",
   },
   {
     keys: ['white label', 'whitelabel'],
-    reply: "**White-Label Security** for MSPs and partners. See [White Label](/white-label).",
+    reply: "**White-Label Security** for MSPs and partners. See [White Label Security](/services/white-label-security).",
   },
   {
     keys: ['offshore', 'staff aug'],
-    reply: "**Offshore Teams** — dedicated security talent. See [Offshore](/offshore).",
+    reply: "**Offshore Teams** — dedicated security talent. See [Offshore Teams](/services/offshore-teams).",
   },
   {
     keys: ['codelivery', 'co-delivery', 'co delivery'],
-    reply: "**Co-Delivery** model for shared engagements. See [Co-Delivery](/codelivery).",
+    reply: "**Co-Delivery** model for shared engagements. See [Co-Delivery](/services/co-delivery).",
   },
   {
     keys: ['msp', 'partner'],
-    reply: "We work closely with **MSPs & Partners**. See [For MSPs](/for-msps).",
+    reply: "We work closely with **MSPs & Partners**. See [For MSPs](/services/for-msps).",
+  },
+  {
+    keys: ['incident response'],
+    reply: "**Incident Response** — rapid containment & recovery. See [Incident Response](/services/incident-response).",
   },
   {
     keys: ['industry', 'industries', 'sector', 'sectors'],
     reply:
-      "We serve multiple industries:\n\n* [Financial Services](/financial)\n* [Government](/government)\n* [Manufacturing](/manufacturing)\n* [Technology](/technology)\n\nSee all on the [Industries](/industries) page.",
+      "We serve multiple industries:\n\n* [Financial Services](/industries/financial)\n* [Government](/industries/government)\n* [Manufacturing](/industries/manufacturing)\n* [Technology](/industries/technology)\n* [Healthcare](/industries/healthcare)",
   },
   {
     keys: ['financial', 'bank', 'fintech', 'banking'],
-    reply: "Cybersecurity for **Financial Services** — see [Financial](/financial).",
+    reply: "Cybersecurity for **Financial Services** — see [Financial](/industries/financial).",
   },
   {
     keys: ['government', 'public sector'],
-    reply: "Cybersecurity for **Government** — see [Government](/government).",
+    reply: "Cybersecurity for **Government** — see [Government](/industries/government).",
   },
   {
     keys: ['manufacturing', 'factory', 'ot'],
-    reply: "Cybersecurity for **Manufacturing & OT** — see [Manufacturing](/manufacturing).",
+    reply: "Cybersecurity for **Manufacturing & OT** — see [Manufacturing](/industries/manufacturing).",
   },
   {
     keys: ['technology', 'saas', 'tech company'],
-    reply: "Cybersecurity for **Technology companies** — see [Technology](/technology).",
+    reply: "Cybersecurity for **Technology companies** — see [Technology](/industries/technology).",
+  },
+  {
+    keys: ['healthcare', 'hospital', 'medical'],
+    reply: "Cybersecurity for **Healthcare** — see [Healthcare](/industries/healthcare).",
   },
   {
     keys: ['certification', 'iso', 'soc 2', 'pci'],
-    reply: "We help you achieve **certifications & compliance** (ISO 27001, SOC 2, PCI DSS, and more). See [Certification](/certification).",
+    reply: "We help you achieve **certifications & compliance** (ISO 27001, SOC 2, PCI DSS, and more). See [Certification & Compliance](/resources/certification).",
   },
   {
     keys: ['training', 'lab', 'learn'],
-    reply: "Hands-on **cyber training & virtual labs**. See [Training & Virtual Lab](/training).",
+    reply: "Hands-on **cyber training & virtual labs**. See [Training & Virtual Lab](/resources/training).",
   },
   {
     keys: ['blog', 'article', 'insight'],
-    reply: "Read our latest insights on the [Blog](/blogs).",
+    reply: "Read our latest insights on the [Blog](/resources/blogs).",
   },
   {
     keys: ['case study', 'success', 'story', 'stories'],
