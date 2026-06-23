@@ -239,7 +239,7 @@ function renderMarkdown(text) {
     const h = trimmed.match(/^(#{1,4})\s+(.*)$/);
     if (h) {
       if (inList) { out.push('</ul>'); inList = false; }
-      out.push(`<div class="font-semibold text-orange-700 mt-1 mb-1">${h[2]}</div>`);
+      out.push(`<div class="font-semibold mt-1 mb-1" style="color:#FE5538">${h[2]}</div>`);
       continue;
     }
     if (/^[*\-]\s+/.test(trimmed)) {
