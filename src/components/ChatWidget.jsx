@@ -239,7 +239,7 @@ function renderMarkdown(text) {
     const h = trimmed.match(/^(#{1,4})\s+(.*)$/);
     if (h) {
       if (inList) { out.push('</ul>'); inList = false; }
-      out.push(`<div class="font-semibold text-orange-700 mt-1 mb-1">${h[2]}</div>`);
+      out.push(`<div class="font-semibold mt-1 mb-1" style="color:#FE5538">${h[2]}</div>`);
       continue;
     }
     if (/^[*\-]\s+/.test(trimmed)) {
@@ -256,11 +256,11 @@ function renderMarkdown(text) {
 
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
   s = s.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
-  s = s.replace(/`([^`]+)`/g, '<code class="bg-orange-100 text-orange-800 px-1 py-0.5 rounded text-xs">$1</code>');
+  s = s.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded text-xs" style="background:rgba(254,85,56,0.15);color:#FE5538">$1</code>');
   s = s.replace(
     /\[([^\]]+)\]\((\/[^\s)]*|https?:\/\/[^\s)]+)\)/g,
     (_, label, href) =>
-      `<a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="noopener" class="text-orange-600 font-medium underline hover:text-orange-700">${label}</a>`
+      `<a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="noopener" class="font-medium underline" style="color:#FE5538">${label}</a>`
   );
   return s;
 }
@@ -356,7 +356,7 @@ export default function ChatWidget() {
         .auriseg-fab { animation: auriseg-float 3s ease-in-out infinite; }
         .auriseg-ring { animation: auriseg-ring 1.8s ease-out infinite; }
         .auriseg-header-shimmer {
-          background: linear-gradient(90deg, #f97316 0%, #fb923c 25%, #f97316 50%, #ea580c 75%, #f97316 100%);
+          background: linear-gradient(90deg, #FE5538 0%, #ff7a63 25%, #FE5538 50%, #d43f24 75%, #FE5538 100%);
           background-size: 200% 100%;
           animation: auriseg-shimmer 6s linear infinite;
         }
@@ -375,24 +375,25 @@ export default function ChatWidget() {
 
       <div className="fixed bottom-5 right-5 z-[9999]">
         {!open && (
-          <span className="absolute inset-0 rounded-full bg-orange-500 auriseg-ring pointer-events-none" />
+          <span className="absolute inset-0 rounded-full auriseg-ring pointer-events-none" style={{ background: '#FE5538' }} />
         )}
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Close chat' : 'Open chat'}
-          className={`relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
+          style={{ background: '#000', border: '2px solid #FE5538' }}
+          className={`relative flex items-center justify-center w-14 h-14 rounded-full text-white shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
         >
           <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
             <img src="/headericon 1.png" alt="Auriseg" className="w-8 h-8 object-contain" />
           </span>
-          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`}>
+          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`} style={{ color: '#FE5538' }}>
             <X size={24} />
           </span>
         </button>
       </div>
 
       {open && (
-        <div className="auriseg-panel fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-500/40 bg-black text-gray-100">
+        <div className="auriseg-panel fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl bg-black text-gray-100" style={{ border: '1px solid rgba(254,85,56,0.4)' }}>
           {/* Header */}
           <div className="auriseg-header-shimmer flex items-center justify-between px-4 py-3 text-white">
             <div className="flex items-center gap-2">
@@ -422,10 +423,13 @@ export default function ChatWidget() {
             {messages.map((m, i) => (
               <div key={i} className={`flex auriseg-msg ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
-                  className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed transition-transform hover:-translate-y-0.5 ${
+                  style={
                     m.role === 'user'
-                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-br-sm shadow-md'
-                      : 'bg-neutral-900 text-gray-100 border border-orange-500/30 rounded-bl-sm shadow-sm'
+                      ? { background: '#FE5538', color: '#fff' }
+                      : { background: '#171717', color: '#f3f4f6', border: '1px solid rgba(254,85,56,0.3)' }
+                  }
+                  className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed transition-transform hover:-translate-y-0.5 ${
+                    m.role === 'user' ? 'rounded-br-sm shadow-md' : 'rounded-bl-sm shadow-sm'
                   }`}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content || '') }}
                 />
@@ -433,17 +437,17 @@ export default function ChatWidget() {
             ))}
             {typing && (
               <div className="flex justify-start auriseg-msg">
-                <div className="bg-neutral-900 border border-orange-500/30 px-3 py-2.5 rounded-2xl rounded-bl-sm text-gray-400 flex items-center gap-1 shadow-sm">
-                  <span className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 bg-orange-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="px-3 py-2.5 rounded-2xl rounded-bl-sm text-gray-400 flex items-center gap-1 shadow-sm" style={{ background: '#171717', border: '1px solid rgba(254,85,56,0.3)' }}>
+                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: '#FE5538', animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: '#FE5538', animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: '#FE5538', animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
           </div>
 
           {/* Suggested questions */}
-          <div className="px-3 pt-2 pb-1 border-t border-orange-500/20 bg-black">
+          <div className="px-3 pt-2 pb-1 bg-black" style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}>
             <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1.5 font-medium">Suggested</div>
             <div className="flex flex-wrap gap-1.5">
               {SUGGESTIONS.map((q, idx) => (
@@ -452,8 +456,8 @@ export default function ChatWidget() {
                   type="button"
                   onClick={() => sendMessage(q)}
                   disabled={typing}
-                  style={{ animationDelay: `${idx * 60}ms` }}
-                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full border border-orange-500/40 bg-neutral-900 text-orange-300 hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ animationDelay: `${idx * 60}ms`, background: '#171717', color: '#FE5538', border: '1px solid rgba(254,85,56,0.4)' }}
+                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {q}
                 </button>
@@ -464,7 +468,8 @@ export default function ChatWidget() {
           {/* Composer */}
           <form
             onSubmit={sendMessage}
-            className="flex items-end gap-2 p-3 border-t border-orange-500/20 bg-black"
+            className="flex items-end gap-2 p-3 bg-black"
+            style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}
           >
             <textarea
               ref={inputRef}
@@ -478,13 +483,15 @@ export default function ChatWidget() {
               }}
               rows={1}
               placeholder="Ask about Auriseg services…"
-              className="flex-1 resize-none bg-neutral-900 border border-orange-500/30 text-gray-100 rounded-xl px-3 py-2 text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:bg-neutral-900 focus:ring-2 focus:ring-orange-500/30 focus:shadow-md transition-all duration-200 max-h-28"
+              style={{ background: '#171717', border: '1px solid rgba(254,85,56,0.3)', color: '#f3f4f6' }}
+              className="flex-1 resize-none rounded-xl px-3 py-2 text-sm placeholder-gray-500 focus:outline-none transition-all duration-200 max-h-28"
               disabled={typing}
             />
             <button
               type="submit"
               disabled={typing || !input.trim()}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 hover:scale-110 hover:-rotate-12 active:scale-90 transition-all duration-200 shadow-md hover:shadow-lg"
+              style={{ background: '#FE5538' }}
+              className="w-10 h-10 flex items-center justify-center rounded-xl text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 hover:scale-110 hover:-rotate-12 active:scale-90 transition-all duration-200 shadow-md hover:shadow-lg"
               aria-label="Send message"
             >
               <Send size={16} className="transition-transform" />
