@@ -1,45 +1,207 @@
 import { useEffect, useRef, useState } from 'react';
-import { MessageCircle, X, Send, Loader2, Trash2 } from 'lucide-react';
+import { MessageCircle, X, Send, Trash2 } from 'lucide-react';
 
 const STORAGE_KEY = 'auriseg_chat_messages_v1';
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
-const ANON = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const WELCOME = {
   role: 'assistant',
   content:
-    "Hi! I'm AurisegBot. Ask me about our cybersecurity services, industries we serve, or how to get help. If you're under active attack, I can point you to our 24/7 hotline.",
+    "Hi! I'm **AurisegBot**. Ask me about our cybersecurity services, industries we serve, or how to get help.\n\nIf you're **under active attack**, tap the suggestion below for our 24/7 hotline.",
 };
 
 const SUGGESTIONS = [
-  'What services do you offer?',
-  'I need help — under attack',
-  'Industries you serve?',
+  'Services',
+  'Under attack',
+  'Industries',
   'Talk to an expert',
+  'Careers',
+  'About Auriseg',
 ];
 
+// Rule-based intents: keywords -> reply (supports **bold** and [label](url))
+const INTENTS = [
+  {
+    keys: ['under attack', 'attack', 'breach', 'incident', 'ransomware', 'hacked', 'compromised', 'emergency'],
+    reply:
+      "🚨 **Under Attack?** Don't wait — our 24/7 incident response team is ready.\n\n* Visit [Under Attack](/under-attack) for the regional hotline\n* Or jump to [Incident Response](/incident-response)\n\nStay calm, isolate affected systems, and contact us immediately.",
+  },
+  {
+    keys: ['service', 'services', 'offering', 'offerings', 'what do you do', 'what do you offer'],
+    reply:
+      "Auriseg offers a full cybersecurity portfolio:\n\n* **Managed Security** — [MDR](/mdr), [SOC Augmentation](/soc-augmentation), [Threat Monitoring](/threat-monitoring), [Managed Security](/managed-security)\n* **Advisory & GRC** — [vCISO](/vciso), [GRC](/grc), [Risk](/risk), [Advisory](/advisory)\n* **Assessments** — [Penetration Testing](/penetration), [Vulnerability](/vulnerability), [Audit](/audit), [Maturity](/maturity)\n* **Specialized** — [Cloud](/cloud), [IoT](/iot), [Mobile](/mobile), [AI Security](/ai), [Social Engineering](/social), [Source Code](/source)\n* **For MSPs** — [White Label](/white-label), [Co-Delivery](/codelivery), [Offshore Teams](/offshore)\n\nWhich area would you like to explore?",
+  },
+  {
+    keys: ['mdr', 'managed detection'],
+    reply: "**MDR (Managed Detection & Response)** — 24/7 threat detection, investigation, and response. Learn more on the [MDR page](/mdr).",
+  },
+  {
+    keys: ['soc', 'security operations'],
+    reply: "Our **SOC Augmentation** extends your in-house team with Auriseg analysts and tooling. See [SOC Augmentation](/soc-augmentation).",
+  },
+  {
+    keys: ['vciso', 'ciso'],
+    reply: "**vCISO** gives you executive security leadership on demand. Details on the [vCISO page](/vciso).",
+  },
+  {
+    keys: ['grc', 'governance', 'compliance', 'risk and compliance'],
+    reply: "**GRC** — governance, risk, and compliance programs tailored to your business. See [GRC](/grc) and [Certification & Compliance](/certification).",
+  },
+  {
+    keys: ['pentest', 'penetration', 'pen test', 'ethical hacking'],
+    reply: "**Penetration Testing** simulates real attacks across your environment. Visit [Penetration Testing](/penetration).",
+  },
+  {
+    keys: ['vulnerability', 'vapt', 'vulnerabilities'],
+    reply: "**Vulnerability Management** — continuous identification and remediation. See [Vulnerability](/vulnerability).",
+  },
+  {
+    keys: ['cloud security', 'cloud'],
+    reply: "**Cloud Security** for AWS, Azure, and GCP. See [Cloud Security](/cloud).",
+  },
+  {
+    keys: ['iot', 'ot ', 'internet of things'],
+    reply: "**IoT/OT Security** for connected devices and industrial systems. See [IoT Security](/iot).",
+  },
+  {
+    keys: ['mobile'],
+    reply: "**Mobile Application Security** — iOS & Android. See [Mobile Security](/mobile).",
+  },
+  {
+    keys: ['ai security', 'ai/ml', 'llm', 'artificial intelligence'],
+    reply: "**AI/ML Security** for models, pipelines, and LLM apps. See [AI Security](/ai).",
+  },
+  {
+    keys: ['source code', 'sast', 'code review'],
+    reply: "**Source Code Review** — secure SDLC and SAST. See [Source Code](/source).",
+  },
+  {
+    keys: ['social engineering', 'phishing'],
+    reply: "**Social Engineering & Phishing Simulation**. See [Social Engineering](/social).",
+  },
+  {
+    keys: ['audit'],
+    reply: "**Security Audits** aligned to ISO 27001, SOC 2, PCI DSS, and more. See [Audit](/audit).",
+  },
+  {
+    keys: ['maturity'],
+    reply: "**Security Maturity Assessment** to benchmark your program. See [Maturity](/maturity).",
+  },
+  {
+    keys: ['white label', 'whitelabel'],
+    reply: "**White-Label Security** for MSPs and partners. See [White Label](/white-label).",
+  },
+  {
+    keys: ['offshore', 'staff aug'],
+    reply: "**Offshore Teams** — dedicated security talent. See [Offshore](/offshore).",
+  },
+  {
+    keys: ['codelivery', 'co-delivery', 'co delivery'],
+    reply: "**Co-Delivery** model for shared engagements. See [Co-Delivery](/codelivery).",
+  },
+  {
+    keys: ['msp', 'partner'],
+    reply: "We work closely with **MSPs & Partners**. See [For MSPs](/for-msps).",
+  },
+  {
+    keys: ['industry', 'industries', 'sector', 'sectors'],
+    reply:
+      "We serve multiple industries:\n\n* [Financial Services](/financial)\n* [Government](/government)\n* [Manufacturing](/manufacturing)\n* [Technology](/technology)\n\nSee all on the [Industries](/industries) page.",
+  },
+  {
+    keys: ['financial', 'bank', 'fintech', 'banking'],
+    reply: "Cybersecurity for **Financial Services** — see [Financial](/financial).",
+  },
+  {
+    keys: ['government', 'public sector'],
+    reply: "Cybersecurity for **Government** — see [Government](/government).",
+  },
+  {
+    keys: ['manufacturing', 'factory', 'ot'],
+    reply: "Cybersecurity for **Manufacturing & OT** — see [Manufacturing](/manufacturing).",
+  },
+  {
+    keys: ['technology', 'saas', 'tech company'],
+    reply: "Cybersecurity for **Technology companies** — see [Technology](/technology).",
+  },
+  {
+    keys: ['certification', 'iso', 'soc 2', 'pci'],
+    reply: "We help you achieve **certifications & compliance** (ISO 27001, SOC 2, PCI DSS, and more). See [Certification](/certification).",
+  },
+  {
+    keys: ['training', 'lab', 'learn'],
+    reply: "Hands-on **cyber training & virtual labs**. See [Training & Virtual Lab](/training).",
+  },
+  {
+    keys: ['blog', 'article', 'insight'],
+    reply: "Read our latest insights on the [Blog](/blogs).",
+  },
+  {
+    keys: ['case study', 'success', 'story', 'stories'],
+    reply: "Browse customer outcomes on [Success Stories](/success-stories).",
+  },
+  {
+    keys: ['career', 'careers', 'job', 'hiring', 'work with'],
+    reply: "We're growing! See open roles on the [Careers](/careers) page.",
+  },
+  {
+    keys: ['about', 'who are you', 'company', 'auriseg'],
+    reply:
+      "**Auriseg** is a global cybersecurity firm protecting organizations across industries with managed security, advisory, and assessment services. Learn more on the [About Us](/about-us) page.",
+  },
+  {
+    keys: ['contact', 'expert', 'talk', 'call', 'reach', 'email', 'phone', 'demo', 'consult', 'quote', 'pricing', 'price', 'cost'],
+    reply:
+      "Happy to connect you with our team. Tap [Talk to an Expert](/talk-to-experts) and we'll get back to you quickly. For urgent issues, visit [Under Attack](/under-attack) for our 24/7 hotline.",
+  },
+  {
+    keys: ['hi', 'hello', 'hey', 'hola', 'namaste', 'good morning', 'good evening', 'good afternoon'],
+    reply: "Hello! 👋 How can I help — services, industries, or getting in touch with an expert?",
+  },
+  {
+    keys: ['thanks', 'thank you', 'thx', 'ty'],
+    reply: "You're welcome! Anything else you'd like to know about Auriseg?",
+  },
+  {
+    keys: ['bye', 'goodbye', 'see you'],
+    reply: "Goodbye! Stay secure. 🔒 You can always [Talk to an Expert](/talk-to-experts) when you're ready.",
+  },
+];
+
+const FALLBACK =
+  "I'm not sure I caught that. Try asking about:\n\n* **Services** (MDR, SOC, vCISO, GRC, Pentest, Cloud, IoT…)\n* **Industries** (Financial, Government, Manufacturing, Technology)\n* **Under attack** — our 24/7 hotline\n* **Talk to an expert**\n\nOr visit our [Contact page](/talk-to-experts).";
+
+function matchIntent(text) {
+  const q = text.toLowerCase();
+  let best = null;
+  let bestScore = 0;
+  for (const intent of INTENTS) {
+    for (const k of intent.keys) {
+      if (q.includes(k) && k.length > bestScore) {
+        best = intent;
+        bestScore = k.length;
+      }
+    }
+  }
+  return best ? best.reply : FALLBACK;
+}
+
 function renderMarkdown(text) {
-  // Escape HTML
   let s = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  // Split into lines to handle headings & lists
   const lines = s.split(/\n/);
   const out = [];
   let inList = false;
   for (let line of lines) {
     const trimmed = line.trim();
-    // Headings ### / ## / #
     const h = trimmed.match(/^(#{1,4})\s+(.*)$/);
     if (h) {
       if (inList) { out.push('</ul>'); inList = false; }
-      const lvl = Math.min(h[1].length + 2, 6); // ### -> h5-ish
       out.push(`<div class="font-semibold text-orange-700 mt-1 mb-1">${h[2]}</div>`);
       continue;
     }
-    // Bullet list
     if (/^[*\-]\s+/.test(trimmed)) {
       if (!inList) { out.push('<ul class="list-disc pl-5 space-y-0.5 my-1">'); inList = true; }
       out.push(`<li>${trimmed.replace(/^[*\-]\s+/, '')}</li>`);
@@ -52,13 +214,9 @@ function renderMarkdown(text) {
   if (inList) out.push('</ul>');
   s = out.join('');
 
-  // Bold **text**
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
-  // Italic *text* (avoid matching list bullets already removed)
   s = s.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
-  // Inline code `code`
   s = s.replace(/`([^`]+)`/g, '<code class="bg-orange-100 text-orange-800 px-1 py-0.5 rounded text-xs">$1</code>');
-  // Links [label](url)
   s = s.replace(
     /\[([^\]]+)\]\((\/[^\s)]*|https?:\/\/[^\s)]+)\)/g,
     (_, label, href) =>
@@ -66,7 +224,6 @@ function renderMarkdown(text) {
   );
   return s;
 }
-
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -82,8 +239,7 @@ export default function ChatWidget() {
     return [WELCOME];
   });
   const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [typing, setTyping] = useState(false);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -97,106 +253,38 @@ export default function ChatWidget() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, open, loading]);
+  }, [messages, open, typing]);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
+    if (open) setTimeout(() => inputRef.current?.focus(), 50);
   }, [open]);
 
-  const sendMessage = async (eOrText) => {
+  const sendMessage = (eOrText) => {
     let text;
-    if (typeof eOrText === 'string') {
-      text = eOrText.trim();
-    } else {
+    if (typeof eOrText === 'string') text = eOrText.trim();
+    else {
       eOrText?.preventDefault?.();
       text = input.trim();
     }
-    if (!text || loading) return;
+    if (!text || typing) return;
 
-    setError(null);
-    const nextMessages = [...messages, { role: 'user', content: text }];
-    setMessages(nextMessages);
+    setMessages((prev) => [...prev, { role: 'user', content: text }]);
     setInput('');
-    setLoading(true);
+    setTyping(true);
 
-
-    try {
-      const payload = nextMessages
-        .filter((m) => m.role === 'user' || m.role === 'assistant')
-        .map((m) => ({ role: m.role, content: m.content }));
-
-      const res = await fetch(CHAT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: ANON,
-          Authorization: `Bearer ${ANON}`,
-        },
-        body: JSON.stringify({ messages: payload }),
-      });
-
-      if (!res.ok || !res.body) {
-        const errBody = await res.json().catch(() => ({ error: 'Request failed' }));
-        throw new Error(errBody.error || `HTTP ${res.status}`);
-      }
-
-      // Stream parse SSE
-      setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed.startsWith('data:')) continue;
-          const data = trimmed.slice(5).trim();
-          if (data === '[DONE]') continue;
-          try {
-            const json = JSON.parse(data);
-            const delta = json.choices?.[0]?.delta?.content;
-            if (delta) {
-              setMessages((prev) => {
-                const copy = [...prev];
-                const last = copy[copy.length - 1];
-                if (last && last.role === 'assistant') {
-                  copy[copy.length - 1] = { ...last, content: last.content + delta };
-                }
-                return copy;
-              });
-            }
-          } catch {}
-        }
-      }
-    } catch (err) {
-      setError(err.message || 'Something went wrong');
-      setMessages((prev) => {
-        if (prev[prev.length - 1]?.role === 'assistant' && prev[prev.length - 1].content === '') {
-          return prev.slice(0, -1);
-        }
-        return prev;
-      });
-    } finally {
-      setLoading(false);
+    // Simulate brief typing delay
+    const reply = matchIntent(text);
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
+      setTyping(false);
       setTimeout(() => inputRef.current?.focus(), 50);
-    }
+    }, 450 + Math.min(reply.length * 4, 800));
   };
 
-  const clearChat = () => {
-    setMessages([WELCOME]);
-    setError(null);
-  };
+  const clearChat = () => setMessages([WELCOME]);
 
   return (
     <>
-      {/* Launcher */}
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Close chat' : 'Open chat'}
@@ -205,16 +293,15 @@ export default function ChatWidget() {
         {open ? <X size={24} /> : <MessageCircle size={24} />}
       </button>
 
-      {/* Panel */}
       {open && (
         <div className="fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-200 bg-white text-gray-900">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white border-b border-orange-300">
+          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-white text-orange-600 flex items-center justify-center font-bold text-sm">A</div>
               <div>
                 <div className="font-semibold text-sm leading-tight">AurisegBot</div>
-                <div className="text-[11px] text-white/80 leading-tight">Online · usually replies instantly</div>
+                <div className="text-[11px] text-white/80 leading-tight">Online · instant replies</div>
               </div>
             </div>
             <button
@@ -230,10 +317,7 @@ export default function ChatWidget() {
           {/* Messages */}
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-3 text-sm bg-orange-50/30">
             {messages.map((m, i) => (
-              <div
-                key={i}
-                className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
+              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
                   className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed ${
                     m.role === 'user'
@@ -244,16 +328,13 @@ export default function ChatWidget() {
                 />
               </div>
             ))}
-            {loading && messages[messages.length - 1]?.role === 'user' && (
+            {typing && (
               <div className="flex justify-start">
-                <div className="bg-white border border-orange-100 px-3 py-2 rounded-2xl rounded-bl-sm text-gray-500 flex items-center gap-2 shadow-sm">
-                  <Loader2 size={14} className="animate-spin" /> Thinking…
+                <div className="bg-white border border-orange-100 px-3 py-2 rounded-2xl rounded-bl-sm text-gray-500 flex items-center gap-1 shadow-sm">
+                  <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '120ms' }} />
+                  <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '240ms' }} />
                 </div>
-              </div>
-            )}
-            {error && (
-              <div className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-                {error}
               </div>
             )}
           </div>
@@ -267,7 +348,7 @@ export default function ChatWidget() {
                   key={q}
                   type="button"
                   onClick={() => sendMessage(q)}
-                  disabled={loading}
+                  disabled={typing}
                   className="text-xs px-2.5 py-1 rounded-full border border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 hover:border-orange-300 transition disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {q}
@@ -277,7 +358,6 @@ export default function ChatWidget() {
           </div>
 
           {/* Composer */}
-
           <form
             onSubmit={sendMessage}
             className="flex items-end gap-2 p-3 border-t border-orange-100 bg-white"
@@ -295,18 +375,17 @@ export default function ChatWidget() {
               rows={1}
               placeholder="Ask about Auriseg services…"
               className="flex-1 resize-none bg-orange-50/50 border border-orange-200 text-gray-900 rounded-xl px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:bg-white max-h-28"
-              disabled={loading}
+              disabled={typing}
             />
             <button
               type="submit"
-              disabled={loading || !input.trim()}
+              disabled={typing || !input.trim()}
               className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110"
               aria-label="Send message"
             >
-              {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+              <Send size={16} />
             </button>
           </form>
-
         </div>
       )}
     </>
