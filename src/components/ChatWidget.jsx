@@ -20,7 +20,7 @@ function renderMarkdown(text) {
   const withLinks = escaped.replace(
     /\[([^\]]+)\]\((\/[^\s)]*|https?:\/\/[^\s)]+)\)/g,
     (_, label, href) =>
-      `<a href="${href}" class="text-cyan-300 underline hover:text-cyan-200">${label}</a>`
+      `<a href="${href}" class="text-orange-600 underline hover:text-orange-700">${label}</a>`
   );
   return withLinks.replace(/\n/g, '<br/>');
 }
