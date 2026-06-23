@@ -105,9 +105,14 @@ export default function ChatWidget() {
     }
   }, [open]);
 
-  const sendMessage = async (e) => {
-    e?.preventDefault();
-    const text = input.trim();
+  const sendMessage = async (eOrText) => {
+    let text;
+    if (typeof eOrText === 'string') {
+      text = eOrText.trim();
+    } else {
+      eOrText?.preventDefault?.();
+      text = input.trim();
+    }
     if (!text || loading) return;
 
     setError(null);
@@ -115,6 +120,7 @@ export default function ChatWidget() {
     setMessages(nextMessages);
     setInput('');
     setLoading(true);
+
 
     try {
       const payload = nextMessages
