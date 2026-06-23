@@ -50,7 +50,7 @@ const DesktopCarousel = ({ current, onPrev, onNext, maxIndex }) => {
   const viewportRef = useRef(null);
   const [cardW, setCardW] = useState(295);
   const GAP = 24;
-  const VISIBLE = 4;
+  const VISIBLE = 3;
 
   useEffect(() => {
     const measure = () => {
@@ -199,7 +199,7 @@ const MobileCarousel = ({ current, onPrev, onNext, maxIndex }) => {
 const AboutTeam = () => {
   const [current, setCurrent] = useState(0);
 
-  const DESKTOP_VISIBLE = 4;
+  const DESKTOP_VISIBLE = 3;
   const MOBILE_VISIBLE = 1;
   const maxDesktop = TEAM.length - DESKTOP_VISIBLE;
   const maxMobile = TEAM.length - MOBILE_VISIBLE;
