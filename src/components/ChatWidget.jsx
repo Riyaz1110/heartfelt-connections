@@ -423,10 +423,13 @@ export default function ChatWidget() {
             {messages.map((m, i) => (
               <div key={i} className={`flex auriseg-msg ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
-                  className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed transition-transform hover:-translate-y-0.5 ${
+                  style={
                     m.role === 'user'
-                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-br-sm shadow-md'
-                      : 'bg-neutral-900 text-gray-100 border border-orange-500/30 rounded-bl-sm shadow-sm'
+                      ? { background: '#FE5538', color: '#fff' }
+                      : { background: '#171717', color: '#f3f4f6', border: '1px solid rgba(254,85,56,0.3)' }
+                  }
+                  className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed transition-transform hover:-translate-y-0.5 ${
+                    m.role === 'user' ? 'rounded-br-sm shadow-md' : 'rounded-bl-sm shadow-sm'
                   }`}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content || '') }}
                 />
@@ -434,10 +437,10 @@ export default function ChatWidget() {
             ))}
             {typing && (
               <div className="flex justify-start auriseg-msg">
-                <div className="bg-neutral-900 border border-orange-500/30 px-3 py-2.5 rounded-2xl rounded-bl-sm text-gray-400 flex items-center gap-1 shadow-sm">
-                  <span className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 bg-orange-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="px-3 py-2.5 rounded-2xl rounded-bl-sm text-gray-400 flex items-center gap-1 shadow-sm" style={{ background: '#171717', border: '1px solid rgba(254,85,56,0.3)' }}>
+                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: '#FE5538', animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: '#FE5538', animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: '#FE5538', animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
