@@ -447,7 +447,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Suggested questions */}
-          <div className="px-3 pt-2 pb-1 border-t border-orange-500/20 bg-black">
+          <div className="px-3 pt-2 pb-1 bg-black" style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}>
             <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1.5 font-medium">Suggested</div>
             <div className="flex flex-wrap gap-1.5">
               {SUGGESTIONS.map((q, idx) => (
@@ -456,8 +456,8 @@ export default function ChatWidget() {
                   type="button"
                   onClick={() => sendMessage(q)}
                   disabled={typing}
-                  style={{ animationDelay: `${idx * 60}ms` }}
-                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full border border-orange-500/40 bg-neutral-900 text-orange-300 hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ animationDelay: `${idx * 60}ms`, background: '#171717', color: '#FE5538', border: '1px solid rgba(254,85,56,0.4)' }}
+                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {q}
                 </button>
