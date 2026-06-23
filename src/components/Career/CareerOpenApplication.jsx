@@ -30,7 +30,6 @@ const CareerOpenApplication = () => {
     const Icon = step.icon;
     return (
       <div
-        onClick={goToPortal}
         style={{
           width: '100%',
           display: 'flex',
@@ -40,7 +39,6 @@ const CareerOpenApplication = () => {
           background: 'rgba(255,255,255,0.02)',
           border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: '10px',
-          cursor: 'pointer',
           transition: 'all 0.25s ease',
           boxSizing: 'border-box',
         }}
