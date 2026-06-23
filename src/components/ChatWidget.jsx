@@ -258,7 +258,26 @@ export default function ChatWidget() {
             )}
           </div>
 
+          {/* Suggested questions */}
+          <div className="px-3 pt-2 pb-1 border-t border-orange-100 bg-white">
+            <div className="text-[10px] uppercase tracking-wide text-gray-400 mb-1.5 font-medium">Suggested</div>
+            <div className="flex flex-wrap gap-1.5">
+              {SUGGESTIONS.map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => sendMessage(q)}
+                  disabled={loading}
+                  className="text-xs px-2.5 py-1 rounded-full border border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 hover:border-orange-300 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Composer */}
+
           <form
             onSubmit={sendMessage}
             className="flex items-end gap-2 p-3 border-t border-orange-100 bg-white"
