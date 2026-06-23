@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { useEffect } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/sections/Footer';
+import ChatWidget from './components/ChatWidget';
 
 // Scrolls to top on every route change
 const ScrollToTop = () => {
