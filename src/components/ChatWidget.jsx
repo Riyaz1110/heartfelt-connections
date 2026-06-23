@@ -151,26 +151,26 @@ export default function ChatWidget() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Close chat' : 'Open chat'}
-        className="fixed bottom-5 right-5 z-[9999] flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-2xl hover:scale-105 active:scale-95 transition-transform"
+        className="fixed bottom-5 right-5 z-[9999] flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl hover:scale-105 active:scale-95 transition-transform"
       >
         {open ? <X size={24} /> : <MessageCircle size={24} />}
       </button>
 
       {/* Panel */}
       {open && (
-        <div className="fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-[#0b1220] text-white">
+        <div className="fixed bottom-24 right-5 z-[9999] w-[92vw] max-w-[380px] h-[70vh] max-h-[560px] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-orange-200 bg-white text-gray-900">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-cyan-600/20 to-blue-700/20 border-b border-white/10">
+          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white border-b border-orange-300">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center font-bold text-sm">A</div>
+              <div className="w-8 h-8 rounded-full bg-white text-orange-600 flex items-center justify-center font-bold text-sm">A</div>
               <div>
                 <div className="font-semibold text-sm leading-tight">AurisegBot</div>
-                <div className="text-[11px] text-cyan-300/80 leading-tight">Online · usually replies instantly</div>
+                <div className="text-[11px] text-white/80 leading-tight">Online · usually replies instantly</div>
               </div>
             </div>
             <button
               onClick={clearChat}
-              className="text-white/60 hover:text-white p-1"
+              className="text-white/80 hover:text-white p-1"
               aria-label="Clear conversation"
               title="Clear conversation"
             >
@@ -179,7 +179,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-3 text-sm">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-3 text-sm bg-orange-50/30">
             {messages.map((m, i) => (
               <div
                 key={i}
@@ -188,8 +188,8 @@ export default function ChatWidget() {
                 <div
                   className={`max-w-[85%] px-3 py-2 rounded-2xl leading-relaxed ${
                     m.role === 'user'
-                      ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-br-sm'
-                      : 'bg-white/5 text-white/90 border border-white/10 rounded-bl-sm'
+                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-br-sm'
+                      : 'bg-white text-gray-800 border border-orange-100 rounded-bl-sm shadow-sm'
                   }`}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content || '') }}
                 />
@@ -197,13 +197,13 @@ export default function ChatWidget() {
             ))}
             {loading && messages[messages.length - 1]?.role === 'user' && (
               <div className="flex justify-start">
-                <div className="bg-white/5 border border-white/10 px-3 py-2 rounded-2xl rounded-bl-sm text-white/70 flex items-center gap-2">
+                <div className="bg-white border border-orange-100 px-3 py-2 rounded-2xl rounded-bl-sm text-gray-500 flex items-center gap-2 shadow-sm">
                   <Loader2 size={14} className="animate-spin" /> Thinking…
                 </div>
               </div>
             )}
             {error && (
-              <div className="text-xs text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+              <div className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
                 {error}
               </div>
             )}
@@ -212,7 +212,7 @@ export default function ChatWidget() {
           {/* Composer */}
           <form
             onSubmit={sendMessage}
-            className="flex items-end gap-2 p-3 border-t border-white/10 bg-[#0b1220]"
+            className="flex items-end gap-2 p-3 border-t border-orange-100 bg-white"
           >
             <textarea
               ref={inputRef}
@@ -226,18 +226,19 @@ export default function ChatWidget() {
               }}
               rows={1}
               placeholder="Ask about Auriseg services…"
-              className="flex-1 resize-none bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm placeholder-white/40 focus:outline-none focus:border-cyan-400/60 max-h-28"
+              className="flex-1 resize-none bg-orange-50/50 border border-orange-200 text-gray-900 rounded-xl px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:bg-white max-h-28"
               disabled={loading}
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110"
               aria-label="Send message"
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
             </button>
           </form>
+
         </div>
       )}
     </>
