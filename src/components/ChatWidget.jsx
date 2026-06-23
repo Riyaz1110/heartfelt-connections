@@ -436,16 +436,16 @@ export default function ChatWidget() {
               }}
               rows={1}
               placeholder="Ask about Auriseg services…"
-              className="flex-1 resize-none bg-orange-50/50 border border-orange-200 text-gray-900 rounded-xl px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:bg-white max-h-28"
+              className="flex-1 resize-none bg-orange-50/50 border border-orange-200 text-gray-900 rounded-xl px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 focus:shadow-md transition-all duration-200 max-h-28"
               disabled={typing}
             />
             <button
               type="submit"
               disabled={typing || !input.trim()}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 hover:scale-110 hover:-rotate-12 active:scale-90 transition-all duration-200 shadow-md hover:shadow-lg"
               aria-label="Send message"
             >
-              <Send size={16} />
+              <Send size={16} className="transition-transform" />
             </button>
           </form>
         </div>
