@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://auriseg.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://auriseg.com/about-us</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/careers</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/talk-to-experts</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/under-attack</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <url><loc>https://auriseg.com/industries/healthcare</loc><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/industries/financial</loc><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/industries/manufacturing</loc><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/industries/technology</loc><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/industries/government</loc><priority>0.7</priority></url>
+
+  <url><loc>https://auriseg.com/success-stories</loc><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/success-stories/1</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/success-stories/2</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/success-stories/3</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/success-stories/4</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/success-stories/5</loc><priority>0.6</priority></url>
+
+  <url><loc>https://auriseg.com/resources/blogs</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/1</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/2</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/3</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/4</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/5</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/6</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/7</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/8</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/9</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/10</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/11</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/blogs/12</loc><priority>0.6</priority></url>
+  <url><loc>https://auriseg.com/resources/certification</loc><priority>0.7</priority></url>
+  <url><loc>https://auriseg.com/resources/training</loc><priority>0.7</priority></url>
+
+  <url><loc>https://auriseg.com/services/for-msps</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/soc-augmentation</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/threat-monitoring</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/incident-response</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/white-label-security</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/offshore-teams</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/co-delivery</loc><priority>0.8</priority></url>
+
+  <url><loc>https://auriseg.com/services/security-testing-assurance</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/vulnerability-assessment</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/penetration-testing</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/mobile-app-security</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/cloud-security-audit</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/social-engineering</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/source-code-review</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/ai-security</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/ot-iot-security</loc><priority>0.8</priority></url>
+
+  <url><loc>https://auriseg.com/services/managed-security</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/247-monitoring</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/mdr</loc><priority>0.8</priority></url>
+
+  <url><loc>https://auriseg.com/services/advisory-and-enablement</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/program-advisory</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/vciso</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/maturity-assessments</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/tool-selection</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/security-architecture</loc><priority>0.8</priority></url>
+
+  <url><loc>https://auriseg.com/services/grc-and-compliance</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/risk-assessments</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/regulatory-compliance</loc><priority>0.8</priority></url>
+  <url><loc>https://auriseg.com/services/audit-readiness</loc><priority>0.8</priority></url>
+</urlset>
