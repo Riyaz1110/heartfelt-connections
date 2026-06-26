@@ -96,33 +96,14 @@ const DesktopCarousel = ({ current, onPrev, onNext, maxIndex }) => {
           }}
         >
           {TEAM.map((m) => (
-            <div key={m.id} className="at-card" style={{ flexShrink: 0, width: cardW, display: 'flex', flexDirection: 'column', perspective: '1200px' }}>
-              {/* Photo + hover overlay */}
-              <div className="at-card-inner" style={{ width: cardW, height: cardW, background: '#F7F7F7', overflow: 'hidden', flexShrink: 0, position: 'relative', transformStyle: 'preserve-3d', transition: 'transform 0.5s cubic-bezier(.2,.7,.3,1), box-shadow 0.5s' }}>
+            <div key={m.id} style={{ flexShrink: 0, width: cardW, display: 'flex', flexDirection: 'column' }}>
+              {/* Photo */}
+              <div style={{ width: cardW, height: cardW, background: '#F7F7F7', overflow: 'hidden', flexShrink: 0 }}>
                 <img
                   src={m.photo} alt={m.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', display: 'block', transition: 'transform 0.5s ease, filter 0.5s ease' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
                   onError={(e) => { e.target.onerror = null; e.target.style.background = '#F7F7F7'; }}
                 />
-                <div className="at-overlay" style={{
-                  position: 'absolute', inset: 0,
-                  background: 'linear-gradient(180deg, rgba(3,4,7,0) 30%, rgba(3,4,7,0.55) 60%, rgba(3,4,7,0.92) 100%)',
-                  opacity: 0, transition: 'opacity 0.4s ease',
-                  display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-                  padding: 20, color: '#fff',
-                }}>
-                  <div className="at-overlay-content" style={{ transform: 'translateY(12px)', transition: 'transform 0.5s cubic-bezier(.2,.7,.3,1)' }}>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontWeight: 600, fontSize: 20, lineHeight: '28px', letterSpacing: '-0.02em', marginBottom: 6 }}>{m.name}</div>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontWeight: 400, fontSize: 13, lineHeight: '18px', letterSpacing: '-0.01em', color: '#E5E7EB', marginBottom: 14 }}>{m.role}</div>
-                    <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', background: '#FF5536', color: '#fff', borderRadius: 4, textDecoration: 'none', fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 13 }}>
-                      Connect
-                      <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-                        <path d="M16.667 2.5H3.333A.833.833 0 002.5 3.333v13.334c0 .46.373.833.833.833h13.334a.833.833 0 00.833-.833V3.333A.833.833 0 0016.667 2.5zM7.083 14.167H5v-5.5h2.083v5.5zM6.042 7.75a1.208 1.208 0 110-2.416 1.208 1.208 0 010 2.416zm8.125 6.417H12.083V11.25c0-.792-.014-1.81-1.104-1.81-1.104 0-1.271.863-1.271 1.754v2.973H7.625v-5.5h1.997v.753h.028c.278-.527.958-1.083 1.972-1.083 2.108 0 2.498 1.39 2.498 3.197v3.633h.047z" fill="#fff" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
               </div>
               {/* Info */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12 }}>
@@ -233,13 +214,6 @@ const AboutTeam = () => {
       <style>{`
         .at-desktop { display: none; }
         .at-mobile  { display: none; }
-        .at-card:hover .at-card-inner {
-          transform: rotateX(12deg) translateY(-6px) scale(1.02);
-          box-shadow: 0 30px 50px -20px rgba(3,4,7,0.45);
-        }
-        .at-card:hover .at-overlay { opacity: 1; }
-        .at-card:hover .at-overlay-content { transform: translateY(0); }
-        .at-card:hover img { transform: scale(1.06); filter: brightness(0.95); }
         @media (min-width: 768px) {
           .at-desktop { display: block; }
           .at-section { padding: 80px 100px; }
