@@ -91,19 +91,20 @@ const DesktopCarousel = ({ current, onPrev, onNext, maxIndex }) => {
           style={{
             display: 'flex',
             gap: GAP,
-            transition: 'none',
+            transition: 'transform 0.4s ease',
             transform: `translateX(-${offset}px)`,
           }}
         >
           {TEAM.map((m) => (
-            <div key={m.id} style={{ flexShrink: 0, width: cardW, display: 'flex', flexDirection: 'column' }}>
+            <div key={m.id} className="at-card" style={{ flexShrink: 0, width: cardW, display: 'flex', flexDirection: 'column' }}>
               {/* Photo */}
-              <div style={{ width: cardW, height: cardW, background: '#F7F7F7', overflow: 'hidden', flexShrink: 0 }}>
+              <div className="at-card-inner" style={{ width: cardW, height: cardW, background: '#F7F7F7', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
                 <img
                   src={m.photo} alt={m.name}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
                   onError={(e) => { e.target.onerror = null; e.target.style.background = '#F7F7F7'; }}
                 />
+
               </div>
               {/* Info */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12 }}>
@@ -160,7 +161,7 @@ const MobileCarousel = ({ current, onPrev, onNext, maxIndex }) => {
       <div ref={viewportRef} style={{ width: '100%', overflow: 'hidden' }}>
         <div style={{
           display: 'flex', gap: GAP,
-          transition: 'none',
+          transition: 'transform 0.4s ease',
           transform: `translateX(-${offset}px)`,
         }}>
           {TEAM.map((m) => (
