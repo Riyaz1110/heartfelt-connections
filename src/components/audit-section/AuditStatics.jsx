@@ -4,7 +4,7 @@ const stats = [
   { number: '5-Days', subNumber: '', description: 'Average Compliance Reporting Time Post-Engagement' },
   { number: '95%', description: 'Average Control Gap Closure Rate' },
   { number: '60+', description: 'Frameworks Supported Across Industries' },
-  { number: '12-Week', description: 'udit Cycles Cut to Under 30 Days ' },
+  { number: '12-Week', description: 'Audit Cycles Cut to Under 30 Days ' },
 ];
 
 const ThreatStats = () => {
