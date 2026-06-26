@@ -233,6 +233,13 @@ const AboutTeam = () => {
       <style>{`
         .at-desktop { display: none; }
         .at-mobile  { display: none; }
+        .at-card:hover .at-card-inner {
+          transform: rotateX(12deg) translateY(-6px) scale(1.02);
+          box-shadow: 0 30px 50px -20px rgba(3,4,7,0.45);
+        }
+        .at-card:hover .at-overlay { opacity: 1; }
+        .at-card:hover .at-overlay-content { transform: translateY(0); }
+        .at-card:hover img { transform: scale(1.06); filter: brightness(0.95); }
         @media (min-width: 768px) {
           .at-desktop { display: block; }
           .at-section { padding: 80px 100px; }
