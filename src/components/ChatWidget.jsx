@@ -280,6 +280,7 @@ export default function ChatWidget() {
   });
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
+  const [inputFocused, setInputFocused] = useState(false);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -295,9 +296,6 @@ export default function ChatWidget() {
     }
   }, [messages, open, typing]);
 
-  useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 50);
-  }, [open]);
 
   const sendMessage = (eOrText) => {
     let text;
@@ -447,7 +445,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Suggested questions — show only while user is typing */}
-          {input.trim().length > 0 && (
+          {(inputFocused || input.trim().length > 0) && (
             <div className="px-3 pt-2 pb-1 bg-black" style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}>
               <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1.5 font-medium">Suggested</div>
               <div className="flex flex-wrap gap-1.5">
@@ -477,6 +475,9 @@ export default function ChatWidget() {
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onFocus={() => setInputFocused(true)}
+              onBlur={() => setTimeout(() => setInputFocused(false), 150)}
+
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
