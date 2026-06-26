@@ -380,11 +380,11 @@ export default function ChatWidget() {
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Close chat' : 'Open chat'}
-          style={{ background: '#000', border: '2px solid #FE5538' }}
-          className={`relative flex items-center justify-center w-14 h-14 rounded-full text-white shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
+          style={{ background: '#fff', border: '2px solid #FE5538' }}
+          className={`relative flex items-center justify-center w-14 h-14 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 ${open ? '' : 'auriseg-fab'}`}
         >
-          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
-            <img src="/headericon 1.png" alt="Auriseg" className="w-8 h-8 object-contain" />
+          <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`} style={{ color: '#FE5538' }}>
+            <MessageCircle size={28} />
           </span>
           <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`} style={{ color: '#FE5538' }}>
             <X size={24} />
@@ -446,24 +446,26 @@ export default function ChatWidget() {
             )}
           </div>
 
-          {/* Suggested questions */}
-          <div className="px-3 pt-2 pb-1 bg-black" style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}>
-            <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1.5 font-medium">Suggested</div>
-            <div className="flex flex-wrap gap-1.5">
-              {SUGGESTIONS.map((q, idx) => (
-                <button
-                  key={q}
-                  type="button"
-                  onClick={() => sendMessage(q)}
-                  disabled={typing}
-                  style={{ animationDelay: `${idx * 60}ms`, background: '#171717', color: '#FE5538', border: '1px solid rgba(254,85,56,0.4)' }}
-                  className="auriseg-chip text-xs px-2.5 py-1 rounded-full hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  {q}
-                </button>
-              ))}
+          {/* Suggested questions — show only while user is typing */}
+          {input.trim().length > 0 && (
+            <div className="px-3 pt-2 pb-1 bg-black" style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}>
+              <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1.5 font-medium">Suggested</div>
+              <div className="flex flex-wrap gap-1.5">
+                {SUGGESTIONS.map((q, idx) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => sendMessage(q)}
+                    disabled={typing}
+                    style={{ animationDelay: `${idx * 60}ms`, background: '#171717', color: '#FE5538', border: '1px solid rgba(254,85,56,0.4)' }}
+                    className="auriseg-chip text-xs px-2.5 py-1 rounded-full hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Composer */}
           <form
