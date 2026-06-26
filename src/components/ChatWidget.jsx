@@ -280,6 +280,7 @@ export default function ChatWidget() {
   });
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
+  const [inputFocused, setInputFocused] = useState(false);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -295,9 +296,6 @@ export default function ChatWidget() {
     }
   }, [messages, open, typing]);
 
-  useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 50);
-  }, [open]);
 
   const sendMessage = (eOrText) => {
     let text;
