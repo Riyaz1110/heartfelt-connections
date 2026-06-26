@@ -91,7 +91,7 @@ const DesktopCarousel = ({ current, onPrev, onNext, maxIndex }) => {
           style={{
             display: 'flex',
             gap: GAP,
-            transition: 'transform 0.4s ease',
+            transition: 'none',
             transform: `translateX(-${offset}px)`,
           }}
         >
@@ -160,7 +160,7 @@ const MobileCarousel = ({ current, onPrev, onNext, maxIndex }) => {
       <div ref={viewportRef} style={{ width: '100%', overflow: 'hidden' }}>
         <div style={{
           display: 'flex', gap: GAP,
-          transition: 'transform 0.4s ease',
+          transition: 'none',
           transform: `translateX(-${offset}px)`,
         }}>
           {TEAM.map((m) => (
