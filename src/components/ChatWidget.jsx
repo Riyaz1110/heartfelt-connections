@@ -445,7 +445,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Suggested questions — show only while user is typing */}
-          {input.trim().length > 0 && (
+          {(inputFocused || input.trim().length > 0) && (
             <div className="px-3 pt-2 pb-1 bg-black" style={{ borderTop: '1px solid rgba(254,85,56,0.2)' }}>
               <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1.5 font-medium">Suggested</div>
               <div className="flex flex-wrap gap-1.5">
